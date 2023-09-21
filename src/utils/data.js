@@ -11,7 +11,7 @@ import strawberry from "../assets/strawberry.jpg";
 import kiwi from "../assets/kiwi.jpg";
 
 
-export const imageArray = [
+export const fruitList = [
     { img: orange, name: "Orange", id: 1 },
     { img: apple, name: "Apple", id: 2 },
     { img: mango, name: "Mango", id: 3 },

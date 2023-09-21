@@ -5,19 +5,19 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { imageArray } from "../utils/data";
+import { fruitList} from "../utils/data";
 
 const HomePage = () => {
 
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
         console.log( uid);
       } else {
-        console.log("user logged out");
+        console.log("user logged out sucessfully");
       }
     });
   }, []);
@@ -33,7 +33,7 @@ const HomePage = () => {
       });
   };
 
-  const [imagelist, setImageList] = useState(imageArray);
+  const [imagelist, setImageList] = useState(fruitList);
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -44,16 +44,16 @@ const HomePage = () => {
     setImageList(updatedImageList);
   };
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [results, setResults] = useState([]);
 
   const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
+    setSearchInput(event.target.value);
   };
 
   const handleSearch = () => {
-    const filteredItems = imageArray.filter(
-      (item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredItems = fruitList.filter(
+      (item) => item.name.toLowerCase().includes(searchInput.toLowerCase())
     );
 
     setResults(filteredItems);
@@ -64,7 +64,7 @@ const HomePage = () => {
       <div className="flex justify-end w-full">
         <button
           onClick={handleLogout}
-          className="text-xs text-white bg-[#ff3939] w-28 h-[38px] flex justify-center items-center font-bold rounded-[8px]"
+          className="text-xs text-white bg-[#4d4af0] w-[100px] h-[38px] flex justify-center items-center font-bold rounded-[8px]"
         >
           LOG OUT
         </button>
@@ -74,7 +74,7 @@ const HomePage = () => {
         <div className="flex border border-[#D1D5DB] rounded-[6px] h-[36px] w-[96%] sm:w-[80%]">
           <input
             type="search"
-            value={searchTerm}
+            value={searchInput}
             onChange={handleInputChange}
             className="w-full p-[10px] text-sm bg-transparent outline-none"
             placeholder="What do you want to watch"
@@ -86,7 +86,7 @@ const HomePage = () => {
             onClick={handleSearch}
             className="w-8 bg-slate-800 flex rounded-r-[6px] justify-center cursor-pointer items-center"
           >
-            <img className="h-[16px] w-[16px]" src={search} alt="" />
+            <img className="h-4 w-4" src={search} alt="" />
           </div>
         </div>
 
@@ -108,7 +108,7 @@ const HomePage = () => {
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="w-full grid grid-cols-2 md:grid-cols-3 gap-2 xs:gap-5 xl:grid-cols-4 gap-y-8 justify-items-center"
+              className="w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-2 xs:gap-5 xl:grid-cols-4 gap-y-8 justify-items-center"
             >
               {imagelist.map((item, index) => (
                 <Draggable
@@ -121,10 +121,10 @@ const HomePage = () => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="relative shadow "
+                      className="relative shadow rounded-md "
                     >
-                      <img className=" w-[300px] h-[270px] xs:h-[360px]" src={item.img} />
-                      <div className="absolute bottom-3 bg-[#000000ad] text-white py-1 flex justify-center w-full">
+                      <img className=" w-[280px] h-[250px] rounded-md " src={item.img} />
+                      <div className="absolute bottom-3 bg-[#585353ad] text-white py-1 flex justify-center w-full">
                         <p>{item.name}</p>
                       </div>
                     </div>

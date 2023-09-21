@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import search from "../assets/Search.svg";
 import { useNavigate } from "react-router-dom";
 import arrow from "../assets/arrowBack.svg";
-import { imageArray } from "../utils/data";
+import { fruitList } from "../utils/data";
 
 const SearchPage = () => {
 
@@ -10,7 +10,6 @@ const SearchPage = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -18,7 +17,7 @@ const SearchPage = () => {
   };
 
   const handleSearch = () => {
-    const filteredItems = imageArray.filter((item) =>
+    const filteredItems = fruitList.filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setResults(filteredItems);
@@ -28,7 +27,7 @@ const SearchPage = () => {
     <div className="p-2 sm:p-5 py-10 flex flex-col gap-6 items-center">
       <div className="flex w-full ">
         <div
-          onClick={() => navigate("/Dashboard")}
+          onClick={() => navigate('/Dashboard')}
           className="h-[40px] w-[40px] flex justify-center items-center bg-gray-300 rounded-[30px]"
         >
           <img className="cursor-pointer" src={arrow} alt="" />
@@ -60,7 +59,7 @@ const SearchPage = () => {
             {results.map((result) => (
               <div className="pt-4" key={result.id}>
                 <div className="relative">
-                  <img className="h-[240px] xs:h-[280px] w-[300px]" src={result.img} />
+                  <img className="h-[240px] xs:h-[280px] w-[300px]" src={result.img} alt="" />
                   <div className="absolute bottom-3 bg-[#000000ad] text-white py-1 flex justify-center w-full">
                     <p>{result.name}</p>
                   </div>
